@@ -1,6 +1,10 @@
-#include <los.h>
+#include <stdio.h>
 
 int main() {
-    console_write_str("CAT\n");
-    return 0;
+    printf("CAT");
+
+    for (int i = 0; i < 16; i++)
+        printf("Cat - %i\n", i);
+
+    return 0xBADC0DE;
 }
