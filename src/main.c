@@ -22,12 +22,12 @@ int main(int argc, const char** argv) {
 
     while (1) {
         int64_t bytes_read = read_file(fd, (void*)buffer, BUFFER_SIZE - 1);
-        if (bytes_read < 0) {
+        if (bytes_read < -1) {
             printf("Error while reading file: %s\n", strerror(bytes_read));
             exit(1);
         }
 
-        if (bytes_read == 0)
+        if (bytes_read == -1)
             break;
 
         printf("%s", buffer);
