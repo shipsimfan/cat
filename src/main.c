@@ -11,7 +11,7 @@ int main(int argc, const char** argv) {
         exit(1);
     }
 
-    int64_t fd = open_file(argv[1]);
+    int64_t fd = open_file(argv[1], OPEN_READ);
     if (fd < 0) {
         printf("Error while opening file: %s\n", strerror(fd));
         exit(1);
