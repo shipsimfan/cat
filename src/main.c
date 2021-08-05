@@ -1,4 +1,3 @@
-#include <los.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,29 +10,25 @@ int main(int argc, const char** argv) {
         exit(1);
     }
 
-    int64_t fd = open_file(argv[1], OPEN_READ);
-    if (fd < 0) {
-        printf("Error while opening file: %s\n", strerror(fd));
+    FILE* file = fopen(argv[1], "r");
+    if (file == NULL) {
+        printf("Error while opening %s\n", argv[1]);
         exit(1);
     }
 
-    char* buffer = (char*)malloc(BUFFER_SIZE);
-    buffer[BUFFER_SIZE - 1] = 0;
-
     while (1) {
-        int64_t bytes_read = read_file(fd, (void*)buffer, BUFFER_SIZE - 1);
-        if (bytes_read < -1) {
-            printf("Error while reading file: %s\n", strerror(bytes_read));
+        int val = fgetc(file);
+
+        if(val < 0) {
+            if(feof(file)) {
+                fflush(stdout);
+                exit(0);
+            }
+
+            printf("Error while reading %s\n", argv[1]);
             exit(1);
         }
 
-        if (bytes_read == -1)
-            break;
-
-        printf("%s", buffer);
+        printf("%c", val);
     }
-
-    printf("\n");
-
-    return 0;
 }
